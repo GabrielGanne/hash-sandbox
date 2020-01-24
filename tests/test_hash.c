@@ -6,6 +6,7 @@
 #include "check.h"
 #include "hash-functions.h"
 #include "primes.h"
+#include "words.h"
 
 #define ABS(a) ((a) > 0 ? (a) : (-(a)))
 
@@ -77,6 +78,45 @@ test_hash_strict_avalanche_primes(uint32_t (* hash_fn)(const void*, int),
 }
 
 static int
+test_hash_strict_avalanche_words(uint32_t (* hash_fn)(const void*, int),
+        char const * hash_fn_name)
+{
+    size_t i, j;
+    uint32_t rv;
+
+    /* flipped is a vector of how many times the n-th bit has been flipped */
+    int flipped[8 * sizeof(uint32_t)] = {0};
+
+    for (i = 0 ; i < words_len ; i++) {
+        rv = strict_avalanche_criterion(hash_fn, words[i], strlen(words[i]));
+        for (j = 0 ; j < arraylen(flipped) ; j++)
+            flipped[j] += (rv & (1 << j)) != 0;
+    }
+
+    /* if a bit has been randomly flipped each time, flipped should contain
+     * numbers ~ words_len / 2.
+     * Arbitrarily decide that
+     *  - number > 60%(words_len) => error
+     *  - number > 51%(words_len) => warning
+     */
+    ssize_t num = (ssize_t) words_len;
+    for (i = 0 ; i < arraylen(flipped) ; i++) {
+        float score = 100. * ABS(flipped[i] - (num / 2)) / num;
+
+        if (score > 1.) {
+            fprintf(stderr, "[%s] FAILED %s: score=%f\n",
+                    hash_fn_name, __func__, 50. + score);
+            return (score > 60.) ? -1 : 0;
+        }
+    }
+
+    fprintf(stderr, "[%s] PASSES %s (50 <= score <= 51)\n",
+            hash_fn_name, __func__);
+
+    return 0;
+}
+
+static int
 test_hash_strict_avalanche_random(uint32_t (* hash_fn)(const void*, int),
         char const * hash_fn_name)
 {
@@ -128,6 +168,7 @@ int main(void)
     for (i = 0 ; i < arraylen(hash_fn_test_list) ; i++) {
         test = &hash_fn_test_list[i];
         test_hash_strict_avalanche_primes(test->hash_fn, test->name);
+        test_hash_strict_avalanche_words(test->hash_fn, test->name);
         test_hash_strict_avalanche_random(test->hash_fn, test->name);
     }
 
