@@ -20,6 +20,7 @@ static struct hash_fn_test_entry hash_fn_test_list[] = {
     {.hash_fn = oat_hash, .name = "oat_hash"},
     {.hash_fn = fibonacci_32_hash, .name = "fibonacci_32_hash"},
     {.hash_fn = modulo_hash, .name = "modulo_hash"},
+    {.hash_fn = fiboat_hash, .name = "fiboat_hash"},
 };
 
 /* return the dffering bits between the two hashes */

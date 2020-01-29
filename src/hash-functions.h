@@ -17,4 +17,6 @@ uint32_t fibonacci_32_hash(const void* data, int len);
 
 uint32_t modulo_hash(const void* data, int len);
 
+uint32_t fiboat_hash(const void* data, int len);
+
 #endif /* HASH_FUNCTIONS_H */
