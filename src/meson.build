@@ -1,6 +1,7 @@
 hash_sources = files(
         'hash-functions.h',
         'bernstein-hash.c',
+        'fiboat-hash.c',
         'fibonacci-hash.c',
         'modulo-hash.c',
         'oat-hash.c',
