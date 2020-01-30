@@ -3,6 +3,7 @@ hash_sources = files(
         'bernstein-hash.c',
         'fiboat-hash.c',
         'fibonacci-hash.c',
+        'flat-hash.c',
         'modulo-hash.c',
         'oat-hash.c',
 )

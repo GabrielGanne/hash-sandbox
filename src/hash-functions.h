@@ -9,6 +9,8 @@ uint32_t oat_hash(const void * data, int len);
 /* string-optimized hash function created by Dan Bernstein */
 uint32_t bernstein_hash(const void * data, int len);
 
+/* dummy function. only here to test the tests */
+uint32_t flat_hash(void const * data, int len);
 
 /**
  * https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/

@@ -16,6 +16,7 @@ struct hash_fn_test_entry {
 };
 
 static struct hash_fn_test_entry hash_fn_test_list[] = {
+    {.hash_fn = flat_hash, .name = "flat_hash"},
     {.hash_fn = bernstein_hash, .name = "bernstein_hash"},
     {.hash_fn = oat_hash, .name = "oat_hash"},
     {.hash_fn = fibonacci_32_hash, .name = "fibonacci_32_hash"},
