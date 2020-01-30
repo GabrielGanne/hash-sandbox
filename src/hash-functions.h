@@ -12,6 +12,15 @@ uint32_t bernstein_hash(const void * data, int len);
 /* dummy function. only here to test the tests */
 uint32_t flat_hash(void const * data, int len);
 
+/* xxhash hash function
+ * https://github.com/Cyan4973/xxHash */
+uint32_t xxh_hash(void const * data, int len);
+
+/* xxh3 hash function
+ * the new experimental hash algorithm from the xxhash project
+ * https://github.com/Cyan4973/xxHash */
+uint32_t xxh3_hash(void const * data, int len);
+
 /**
  * https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/
  */

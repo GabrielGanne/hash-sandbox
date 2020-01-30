@@ -1,3 +1,7 @@
+cc = meson.get_compiler('c')
+cc.check_header('xxhash.h')
+libxxhash = cc.find_library('xxhash', required : true)
+
 hash_sources = files(
         'hash-functions.h',
         'bernstein-hash.c',
@@ -6,6 +10,7 @@ hash_sources = files(
         'flat-hash.c',
         'modulo-hash.c',
         'oat-hash.c',
+        'xxhash-hash.c',
 )
 all_sources += hash_sources
 public_hash_headers = files(
@@ -29,6 +34,7 @@ hashmap_version = hashmap_major + '.' + hashmap_minor + '.' + hashmap_patch
 libhash = shared_library('hashlib',
         hash_sources,
         install : true,
-        version : hash_version
+        version : hash_version,
+        dependencies : libxxhash,
 )
 
