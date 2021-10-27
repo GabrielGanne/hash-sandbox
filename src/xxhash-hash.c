@@ -13,5 +13,5 @@ uint32_t xxh_hash(void const * data, int len)
 uint32_t xxh3_hash(void const * data, int len)
 {
     /* only keep the first 32 bits */
-    return (XXH64(data, len, SEED) >> 32);
+    return (XXH3_64bits_withSeed(data, len, SEED) >> 32);
 }
